@@ -9,3 +9,4 @@ Requires-Dist: seaborn
 Requires-Dist: matplotlib
 Requires-Dist: scikit-learn
 Requires-Dist: streamlit
+Requires-Dist: xgboost
