@@ -27,7 +27,7 @@ def evaluate_model(X_train,y_train, X_test, y_test, models):
         report = {}
         for i in range(len(list(models))):
              model = list(models.values())[i]
-             model.fit(X_test, y_test)
+             model.fit(X_train, y_train)
 
             # Make Prediction
 
