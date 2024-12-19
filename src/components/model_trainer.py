@@ -35,9 +35,9 @@ class ModelTrainerClass:
             logging.info("Splitting independent and Dependent Variable")
             X_train,y_train, X_test, y_test = (
                 train_arr[:,:-1],
-                train_arr[:,-1],
+                np.log(train_arr[:,-1]),
                 test_arr[:,:-1],
-                test_arr[:,-1]
+                np.log(test_arr[:,-1])
 
             )
 
@@ -48,16 +48,83 @@ class ModelTrainerClass:
                 "Ridge": Ridge(),
                 "DecisionTreeRegressor":DecisionTreeRegressor(),
                 "ElasticNet": ElasticNet(),
-                "KNeighborsRegressor":KNeighborsRegressor(n_neighbors=3),
                 "RandomForestRegressor":RandomForestRegressor(),
-                "GradientBoostingRegressor":GradientBoostingRegressor(n_estimators=500),
-                "AdaBoostRegressor":AdaBoostRegressor(n_estimators=15,learning_rate=1.0),
+                "KNeighborsRegressor":KNeighborsRegressor(),
+                "DecisionTreeRegressor":DecisionTreeRegressor(),
+                "GradientBoostingRegressor":GradientBoostingRegressor(),
+                "AdaBoostRegressor":AdaBoostRegressor(),
                 "ExtraTreesRegressor":ExtraTreesRegressor(),
-                "SVR":SVR(kernel='rbf',C=10000,epsilon=0.1),
+                "SVR":SVR(),
                 "XGBRegressor":XGBRegressor(n_estimators=45,max_depth=5,learning_rate=0.5)
     
     }
-            model_report : dict = evaluate_model(X_train,y_train, X_test, y_test, models)
+            params={
+                "DecisionTreeRegressor": {
+                    'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+                    'splitter':['best','random'],
+                    'max_features':['sqrt','log2'],
+                },
+                "GradientBoostingRegressor":{
+                    #'loss':['squared_error', 'huber', 'absolute_error', 'quantile'],
+                    'learning_rate':[.1,.01,.05,.001],
+                    'subsample':[0.6,0.7,0.75,0.8,0.85,0.9],
+                    #'criterion':['squared_error', 'friedman_mse'],
+                    #'max_features':['auto','sqrt','log2'],
+                    'n_estimators': [8,16,32,45,64,128,256]
+                },
+                "LinearRegression":{},
+                "XGBRegressor":{
+                    'learning_rate':[.1,.01,.05,.001],
+                    'n_estimators': [8,16,32,64,128,256]
+                },
+                "AdaBoostRegressor":{
+                    'learning_rate':[.1,.01,0.5,.001],
+                    'loss':['linear','square','exponential'],
+                    'n_estimators': [8,16,32,64,128,256]
+                },
+                "KNeighborsRegressor":{
+                    'n_neighbors': [3, 5, 10, 20],
+                    'weights': ['uniform', 'distance'],
+                    'metric': ['minkowski', 'euclidean', 'manhattan']
+                },
+                "ExtraTreesRegressor":{
+                    'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+                 
+                    'max_features':['sqrt','log2',None],
+                    'n_estimators': [8,16,32,64,128,256]
+                },
+                "Lasso":{
+                    'alpha': [np.random.uniform(0.01, 10)], 
+                    'max_iter': [1000, 2000, 5000],
+                    'fit_intercept': [True, False]},
+
+                "Ridge":{
+                    'alpha': [0.1, 1, 10, 100],
+                    'solver': ['auto', 'svd', 'lsqr']
+                },
+                "SVR":{
+                    'kernel':['rbf'],
+                    'C':[1,10,100,10000],
+                    'epsilon':[0.1,0.2]
+                },
+                "ElasticNet":{},
+                "DecisionTreeRegressor":{
+                    'max_depth': [5, 10, 15, None],
+                    'min_samples_split': [2, 5, 10],
+                    'min_samples_leaf': [1, 2, 4],
+                    'max_features': ['auto', 'sqrt', 'log2']},
+
+                "RandomForestRegressor":{
+                    'n_estimators': [np.random.randint(100, 1000)],
+                    'max_depth': [None, 10, 20, 30],
+                    'min_samples_split': [np.random.randint(2, 20)],
+                    'min_samples_leaf': [np.random.randint(1, 20)],
+                    'max_features': ['auto', 'sqrt', 'log2'],
+                    'bootstrap': [True, False]
+                }
+                        
+                        }
+            model_report : dict = evaluate_model(X_train,y_train, X_test, y_test, models,param=params)
             print(model_report)
             print("\n ==================================================================================")
             logging.info(f"Model report info : {model_report}")
