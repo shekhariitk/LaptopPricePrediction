@@ -119,7 +119,7 @@ class ModelTrainerClass:
             mlflow.set_experiment("Model_Training")
             dagshub.init(repo_owner='shekhariitk', repo_name='LaptopPricePrediction', mlflow=True)
 
-            with mlflow.start_run():
+            with mlflow.start_run(run_name="Model_Training", nested=True):
                 logging.info("Evaluating models and hyperparameter tuning")
                 model_report: dict = evaluate_model(X_train, y_train, X_test, y_test, models, param=params)
 
