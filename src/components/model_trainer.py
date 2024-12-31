@@ -1,5 +1,6 @@
 import mlflow
 import mlflow.sklearn
+import dagshub
 
 import pandas as pd
 import numpy as np
@@ -114,9 +115,11 @@ class ModelTrainerClass:
             }
 
             # Start MLflow experiment
+            mlflow.set_tracking_uri("https://dagshub.com/shekhariitk/LaptopPricePrediction.mlflow")
             mlflow.set_experiment("Model_Training")
-            mlflow.set_tracking_uri("http://127.0.0.1:5000")
-            with mlflow.start_run() as run :
+            dagshub.init(repo_owner='shekhariitk', repo_name='LaptopPricePrediction', mlflow=True)
+
+            with mlflow.start_run():
                 logging.info("Evaluating models and hyperparameter tuning")
                 model_report: dict = evaluate_model(X_train, y_train, X_test, y_test, models, param=params)
 

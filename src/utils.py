@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import mlflow
 import mlflow.sklearn
+import dagshub
 
 from src.exception import CustomException
 from src.logger import logging
@@ -25,6 +26,9 @@ def save_obj(file_path, obj):
         raise CustomException(e, sys)   
 
 
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.model_selection import GridSearchCV
+
 def evaluate_model(X_train, y_train, X_test, y_test, models, param):
     """
     Evaluates multiple models using GridSearchCV for hyperparameter tuning.
@@ -43,7 +47,10 @@ def evaluate_model(X_train, y_train, X_test, y_test, models, param):
     """
     try:
         report = {}
-        
+        best_model_name = None
+        best_model_score = float("-inf")
+        best_model = None
+
         for i in range(len(list(models))):
             model_name = list(models.keys())[i]
             model = list(models.values())[i]
@@ -51,44 +58,67 @@ def evaluate_model(X_train, y_train, X_test, y_test, models, param):
 
             logging.info(f"Evaluating model: {model_name}")
 
-            # Start an MLflow run for the current model
-            with mlflow.start_run(run_name=model_name):
-                # Perform GridSearchCV for hyperparameter tuning
-                gs = GridSearchCV(model, para, cv=3, n_jobs=-1, scoring='r2', verbose=1)
-                gs.fit(X_train, y_train)
+            try:
+                # Start an MLflow run for the current model
+                mlflow.set_tracking_uri("https://dagshub.com/shekhariitk/LaptopPricePrediction.mlflow")
+                mlflow.set_experiment("Model_Evaluation")
+                dagshub.init(repo_owner='shekhariitk', repo_name='LaptopPricePrediction', mlflow=True)
+                with mlflow.start_run(run_name=model_name, nested=True):
+                    if not para:
+                        logging.info(f"No hyperparameters provided for {model_name}. Training without GridSearchCV.")
+                        model.fit(X_train, y_train)
+                    else:
+                        # Perform GridSearchCV for hyperparameter tuning
+                        gs = GridSearchCV(model, para, cv=3, n_jobs=-1, scoring='r2', verbose=0)
+                        gs.fit(X_train, y_train)
+                        model.set_params(**gs.best_params_)
 
-                # Set the best parameters to the model
-                model.set_params(**gs.best_params_)
-                model.fit(X_train, y_train)
+                    # Train the model on the training data
+                    model.fit(X_train, y_train)
 
-                logging.info(f"Model: {model_name} best parameters: {gs.best_params_}")
+                    # Log best parameters to MLflow
+                    if para:
+                        mlflow.log_params(gs.best_params_)
+                        logging.info(f"Model: {model_name} best parameters: {gs.best_params_}")
 
-                # Log best parameters to MLflow
-                mlflow.log_params(gs.best_params_)
+                    # Make predictions on the test set
+                    y_pred = model.predict(X_test)
+                    logging.info(f"Model: {model_name} predictions completed")
 
-                # Make predictions on the test set
-                y_pred = model.predict(X_test)
-                logging.info(f"Model: {model_name} predictions completed")
+                    # Calculate R2 score and other metrics
+                    r2 = r2_score(y_test, y_pred)
+                    mse = mean_squared_error(y_test, y_pred)
+                    mae = mean_absolute_error(y_test, y_pred)
 
-                # Calculate R2 score
-                test_model_score = r2_score(y_test, y_pred)
-                report[model_name] = test_model_score
+                    report[model_name] = r2
 
-                logging.info(f"Model: {model_name} R2 score: {test_model_score}")
+                    logging.info(f"Model: {model_name} R2 score: {r2}")
 
-                # Log the R2 score to MLflow
-                mlflow.log_metric("R2_score", test_model_score)
-                mlflow.log_metric("MSE", mean_squared_error(y_test,y_pred))               
+                    # Log metrics to MLflow
+                    mlflow.log_metric("R2_score", r2)
+                    mlflow.log_metric("MSE", mse)
+                    mlflow.log_metric("MAE", mae)
 
-                # Log the trained model to MLflow
-                mlflow.sklearn.log_model(model, model_name)
+                    # Log the trained model to MLflow
+                    mlflow.sklearn.log_model(model, model_name)
 
-        return report  
+                    # Update the best model if applicable
+                    if r2 > best_model_score:
+                        best_model_name = model_name
+                        best_model_score = r2
+                        best_model = model
 
-    except Exception as e: 
+            except Exception as model_error:
+                logging.error(f"Error evaluating model: {model_name}, Error: {str(model_error)}")
+                continue
+
+        logging.info(f"Best model: {best_model_name} with R2 Score: {best_model_score}")
+        return report, best_model_name, best_model_score, best_model
+
+    except Exception as e:
         logging.error("Error occurred during model evaluation")
         raise CustomException(e, sys)
-    
+
 
 def load_object(file_path):
     try:
