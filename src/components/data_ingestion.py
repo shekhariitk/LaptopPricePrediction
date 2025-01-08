@@ -1,5 +1,6 @@
 import os
 import sys
+import yaml
 from src.logger import logging
 from src.exception import CustomException
 import pandas as pd
@@ -7,31 +8,39 @@ from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 from typing import Tuple
 
-## Initialize the data ingestion configuration
+# Load the configuration from the YAML file
+def load_config(config_file_path):
+    with open(config_file_path, 'r') as file:
+        return yaml.safe_load(file)
+
+# Load the configuration
+config = load_config('xyz.yaml')
+
+## Data Ingestion Configuration
 @dataclass
-class DataIngestionconfig:
-    train_data_path: str = os.path.join('artifacts', 'train.csv')
-    test_data_path: str = os.path.join('artifacts', 'test.csv')
-    raw_data_path: str = os.path.join('artifacts', 'raw.csv')
+class DataIngestionConfig:
+    raw_data_path: str = config['data_ingestion']['raw_data_path']
+    train_data_path: str = config['data_ingestion']['train_data_path']
+    test_data_path: str = config['data_ingestion']['test_data_path']
+    source_data_path: str = config['paths']['source_data_path']
 
-
-## Create a data ingestion class
+## Data Ingestion Class
 class DataIngestion:
     def __init__(self):
-        self.ingestion_config = DataIngestionconfig()
+        self.ingestion_config = DataIngestionConfig()
 
     def initiate_data_ingestion(self) -> Tuple[str, str]:
         logging.info('Data Ingestion method starts')
 
         try:
-            # Reading the dataset
-            df = pd.read_csv(os.path.join('notebooks', 'data', 'cleaned_data.csv'))
+            # Read the source dataset
+            df = pd.read_csv(self.ingestion_config.source_data_path)
             logging.info('Dataset read as pandas DataFrame')
 
             # Create the required directories if they don't exist
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path), exist_ok=True)
 
-            # Saving the raw data
+            # Save the raw data
             df.to_csv(self.ingestion_config.raw_data_path, index=False)
             logging.info("Raw data saved at: %s", self.ingestion_config.raw_data_path)
 

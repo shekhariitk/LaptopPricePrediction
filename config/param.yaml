@@ -1,0 +1,127 @@
+models:
+  LinearRegression: {}
+
+  Lasso:
+    alpha:
+      - 0.01
+      - 0.1
+      - 1
+    max_iter:
+      - 1000
+      - 2000
+    fit_intercept:
+      - true
+      - false
+
+  Ridge:
+    alpha:
+      - 0.1
+      - 1
+      - 10
+    solver:
+      - auto
+      - svd
+
+  DecisionTreeRegressor:
+    criterion:
+      - squared_error
+      - friedman_mse
+      - absolute_error
+      - poisson
+    splitter:
+      - best
+      - random
+    max_features:
+      - sqrt
+      - log2
+    max_depth:
+      - 5
+      - 10
+      - 15
+      - null
+
+  GradientBoostingRegressor:
+    learning_rate:
+      - 0.1
+      - 0.01
+      - 0.05
+      - 0.001
+    subsample:
+      - 0.6
+      - 0.7
+      - 0.75
+      - 0.8
+      - 0.85
+      - 0.9
+    n_estimators:
+      - 8
+      - 16
+      - 32
+      - 64
+      - 128
+      - 256
+
+  RandomForestRegressor:
+    n_estimators:
+      - 100
+      - 200
+      - 500
+    max_depth:
+      - null
+      - 10
+      - 20
+      - 30
+    min_samples_split:
+      - 2
+      - 5
+    min_samples_leaf:
+      - 1
+      - 2
+    max_features:
+      - auto
+      - sqrt
+      - log2
+    bootstrap:
+      - true
+      - false
+
+  KNeighborsRegressor:
+    n_neighbors:
+      - 3
+      - 5
+      - 10
+      - 20
+    weights:
+      - uniform
+      - distance
+    metric:
+      - minkowski
+      - euclidean
+      - manhattan
+
+  XGBRegressor:
+    learning_rate:
+      - 0.1
+      - 0.01
+      - 0.05
+    n_estimators:
+      - 8
+      - 16
+      - 32
+      - 64
+      - 128
+      - 256
+
+  SVR:
+    kernel:
+      - rbf
+    C:
+      - 1
+      - 10
+      - 100
+      - 10000
+    epsilon:
+      - 0.1
+      - 0.2
+
+  ElasticNet: {}

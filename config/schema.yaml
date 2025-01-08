@@ -1,0 +1,198 @@
+models:
+  LinearRegression:
+    fit_intercept:
+      type: bool
+      description: Whether to calculate the intercept for this model.
+      default: true
+    normalize:
+      type: bool
+      description: Whether to normalize the data before fitting.
+      default: false
+  Lasso:
+    alpha:
+      type: float
+      description: Regularization strength. Must be a positive float.
+      range: [0.01, 10.0]
+      default: 1.0
+    max_iter:
+      type: int
+      description: Maximum number of iterations for optimization.
+      default: 1000
+    fit_intercept:
+      type: bool
+      description: Whether to calculate the intercept for this model.
+      default: true
+  Ridge:
+    alpha:
+      type: float
+      description: Regularization strength. Must be a positive float.
+      range: [0.01, 100.0]
+      default: 1.0
+    solver:
+      type: str
+      description: Solver to use for optimization.
+      values: ['auto', 'svd', 'lsqr']
+      default: 'auto'
+  DecisionTreeRegressor:
+    criterion:
+      type: str
+      description: The function to measure the quality of a split.
+      values: ['squared_error', 'friedman_mse', 'absolute_error', 'poisson']
+      default: 'squared_error'
+    splitter:
+      type: str
+      description: The strategy used to split at each node.
+      values: ['best', 'random']
+      default: 'best'
+    max_features:
+      type: str
+      description: The number of features to consider when looking for the best split.
+      values: ['auto', 'sqrt', 'log2']
+      default: 'sqrt'
+    max_depth:
+      type: int
+      description: The maximum depth of the tree.
+      range: [1, 20]
+      default: 10
+    min_samples_split:
+      type: int
+      description: The minimum number of samples required to split an internal node.
+      range: [2, 20]
+      default: 2
+    min_samples_leaf:
+      type: int
+      description: The minimum number of samples required to be at a leaf node.
+      range: [1, 20]
+      default: 1
+  ElasticNet:
+    alpha:
+      type: float
+      description: Regularization strength.
+      range: [0.01, 10.0]
+      default: 1.0
+    l1_ratio:
+      type: float
+      description: The elasticnet mixing parameter. Between 0 and 1.
+      range: [0.1, 1.0]
+      default: 0.5
+  RandomForestRegressor:
+    n_estimators:
+      type: int
+      description: The number of trees in the forest.
+      range: [10, 500]
+      default: 100
+    max_depth:
+      type: int
+      description: The maximum depth of the tree.
+      range: [1, 20]
+      default: None
+    min_samples_split:
+      type: int
+      description: The minimum number of samples required to split an internal node.
+      range: [2, 20]
+      default: 2
+    min_samples_leaf:
+      type: int
+      description: The minimum number of samples required to be at a leaf node.
+      range: [1, 20]
+      default: 1
+    max_features:
+      type: str
+      description: The number of features to consider when looking for the best split.
+      values: ['auto', 'sqrt', 'log2']
+      default: 'auto'
+    bootstrap:
+      type: bool
+      description: Whether bootstrap samples are used when building trees.
+      default: True
+  KNeighborsRegressor:
+    n_neighbors:
+      type: int
+      description: The number of neighbors to use.
+      range: [1, 50]
+      default: 5
+    weights:
+      type: str
+      description: The weight function used in prediction.
+      values: ['uniform', 'distance']
+      default: 'uniform'
+    metric:
+      type: str
+      description: The distance metric to use for the tree.
+      values: ['minkowski', 'euclidean', 'manhattan']
+      default: 'minkowski'
+  GradientBoostingRegressor:
+    learning_rate:
+      type: float
+      description: The rate at which the model learns.
+      range: [0.01, 1.0]
+      default: 0.1
+    subsample:
+      type: float
+      description: The fraction of samples to be used for fitting each base learner.
+      range: [0.6, 1.0]
+      default: 0.8
+    n_estimators:
+      type: int
+      description: The number of boosting stages.
+      range: [10, 500]
+      default: 100
+  AdaBoostRegressor:
+    learning_rate:
+      type: float
+      description: Weight of each new base learner.
+      range: [0.01, 1.0]
+      default: 0.1
+    loss:
+      type: str
+      description: The loss function to optimize.
+      values: ['linear', 'square', 'exponential']
+      default: 'linear'
+    n_estimators:
+      type: int
+      description: The number of estimators.
+      range: [10, 500]
+      default: 100
+  ExtraTreesRegressor:
+    criterion:
+      type: str
+      description: The function to measure the quality of a split.
+      values: ['squared_error', 'friedman_mse', 'absolute_error', 'poisson']
+      default: 'squared_error'
+    max_features:
+      type: str
+      description: The number of features to consider when looking for the best split.
+      values: ['sqrt', 'log2', None]
+      default: 'sqrt'
+    n_estimators:
+      type: int
+      description: The number of trees in the forest.
+      range: [10, 500]
+      default: 100
+  SVR:
+    kernel:
+      type: str
+      description: Specifies the kernel type to be used in the algorithm.
+      values: ['rbf']
+      default: 'rbf'
+    C:
+      type: int
+      description: Regularization parameter.
+      range: [1, 10000]
+      default: 1
+    epsilon:
+      type: float
+      description: Epsilon parameter of the epsilon-SVR model.
+      range: [0.1, 1.0]
+      default: 0.1
+  XGBRegressor:
+    learning_rate:
+      type: float
+      description: Step size shrinking.
+      range: [0.01, 1.0]
+      default: 0.1
+    n_estimators:
+      type: int
+      description: The number of boosting rounds.
+      range: [10, 500]
+      default: 100
