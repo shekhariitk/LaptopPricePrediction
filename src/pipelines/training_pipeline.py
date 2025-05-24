@@ -1,32 +1,37 @@
 import os
-import sys
-import pandas as pd
-import numpy as np
-
-from src.exception import CustomException
-from src.logger import logging
-
-
+import logging
 from src.components.data_ingestion import DataIngestion
 from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTrainerClass
+from src.utils import load_config
 
-if __name__ == '__main__':
-    obj = DataIngestion()
-    # Call the initiate_data_ingestion method
-    result = obj.initiate_data_ingestion()
+# Load the configuration
+config = load_config('xyz.yaml')
+logging.info(f"Loaded config: {config}")
 
-# Check if the result is None
-    if result is None:
-       logging.error("Data Ingestion failed. Please check the logs for more details.")
-    # Handle the failure, possibly exit or raise an exception
-    else:
-        train_data_path, test_data_path = result
-        logging.info(f"Data Ingestion Successful: Train path - {train_data_path}, Test path - {test_data_path}")
+def main():
+    try:
+        # Data Ingestion
+        logging.info("Starting Data Ingestion...")
+        data_ingestion = DataIngestion(config)
+        train_data_path, test_data_path = data_ingestion.initiate_data_ingestion()
+        logging.info(f"Data Ingestion completed. Train data path: {train_data_path}, Test data path: {test_data_path}")
 
+        # Data Transformation
+        logging.info("Starting Data Transformation...")
+        data_transformation = DataTransformation(config)
+        train_arr, test_arr, preprocessor_ob_path = data_transformation.initiate_data_transformation(train_data_path, test_data_path)
+        logging.info("Data Transformation completed.")
 
-    data_transformation = DataTransformation()
-    train_arr ,test_arr,_ = data_transformation.initiate_data_transformation(train_data_path,test_data_path)
+        # Model Training
+        logging.info("Starting Model Training...")
+        model_trainer = ModelTrainerClass()
+        model_trainer.initiate_model_training(train_arr, test_arr)
+        logging.info("Model Training completed.")
 
-    model_trainer  = ModelTrainerClass()
-    model_trainer.initiate_model_training(train_arr,test_arr)
+    except Exception as e:
+        logging.error(f"An error occurred: {str(e)}")
+        raise
+
+if __name__ == "__main__":
+    main()

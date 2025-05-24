@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/LaptopPriceprediction/mlruns/0/ec8553b8cdba4298b508841edc0e2398/artifacts
+deleted_time: 1741844948674
+end_time: 1737667780818
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: ec8553b8cdba4298b508841edc0e2398
+run_name: traveling-swan-562
+run_uuid: ec8553b8cdba4298b508841edc0e2398
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1737667780757
+status: 3
+tags: []
+user_id: SHEKHAR SUMAN

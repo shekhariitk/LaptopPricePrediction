@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/LaptopPriceprediction/mlruns/0/e556766e92b74fa0a4a8395de552fe23/artifacts
+end_time: 1741845945618
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e556766e92b74fa0a4a8395de552fe23
+run_name: efficient-lark-76
+run_uuid: e556766e92b74fa0a4a8395de552fe23
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741845945550
+status: 3
+tags: []
+user_id: SHEKHAR SUMAN

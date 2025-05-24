@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/LaptopPriceprediction/mlruns/0/7f7e317aa77644edb90c7eb000337fcd/artifacts
+deleted_time: 1741844948535
+end_time: 1737667511625
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 7f7e317aa77644edb90c7eb000337fcd
+run_name: adaptable-duck-36
+run_uuid: 7f7e317aa77644edb90c7eb000337fcd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1737667511584
+status: 3
+tags: []
+user_id: SHEKHAR SUMAN

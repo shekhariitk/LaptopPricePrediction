@@ -3,9 +3,7 @@ import sys
 import pickle
 import pandas as pd
 import numpy as np
-import mlflow
-import mlflow.sklearn
-import dagshub
+import yaml
 
 from src.exception import CustomException
 from src.logger import logging
@@ -37,23 +35,30 @@ def evaluate_models(X_train, y_train,X_test,y_test,models,param):
             model = list(models.values())[i]
             para=param[list(models.keys())[i]]
 
+            logging.info(f"model:{model} is started")
+
             gs = GridSearchCV(model,para,cv=3)
             gs.fit(X_train,y_train)
 
             model.set_params(**gs.best_params_)
             model.fit(X_train,y_train)
 
-            #model.fit(X_train, y_train)  # Train model
+            logging.info(f"model:{model} is Evaluated and best param is {gs.best_params_}")
 
             y_train_pred = model.predict(X_train)
 
             y_test_pred = model.predict(X_test)
+
+            logging.info(f"model:{model} prediction is completed")
 
             train_model_score = r2_score(y_train, y_train_pred)
 
             test_model_score = r2_score(y_test, y_test_pred)
 
             report[list(models.keys())[i]] = test_model_score
+
+            logging.info(f"model:{model} score is stored and the test score is : {test_model_score}")
+            logging.info(f"model:{model} score is stored and the train score is : {train_model_score}")
 
         return report
 
@@ -68,4 +73,15 @@ def load_object(file_path):
         
     except Exception as e: 
         logging.info("Error Occured during load object ")
+        raise CustomException(e, sys)
+    
+
+# Load YAML configuration
+def load_config(config_file_path):
+    try:
+        with open(config_file_path, 'r') as file:
+          return yaml.safe_load(file)
+        
+    except Exception as e: 
+        logging.info("Error Occured during load_config ")
         raise CustomException(e, sys)

@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/LaptopPriceprediction/mlruns/0/7a1a722a577445919715b1fc13bc0ec2/artifacts
+end_time: 1741846703977
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 7a1a722a577445919715b1fc13bc0ec2
+run_name: funny-loon-454
+run_uuid: 7a1a722a577445919715b1fc13bc0ec2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741846703867
+status: 3
+tags: []
+user_id: SHEKHAR SUMAN

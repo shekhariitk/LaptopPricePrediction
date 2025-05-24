@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction Result{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h3 class="text-center">Prediction Result</h3>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success text-center">
+                    <h4 class="alert-heading">Estimated Price</h4>
+                    <h2 class="display-4">{{ prediction }}</h2>
+                </div>
+                
+                <h5 class="mt-4">Specifications:</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Company</th>
+                                <td>{{ user_input.Company }}</td>
+                            </tr>
+                            <tr>
+                                <th>Type</th>
+                                <td>{{ user_input.TypeName }}</td>
+                            </tr>
+                            <tr>
+                                <th>RAM</th>
+                                <td>{{ user_input.Ram }} GB</td>
+                            </tr>
+                            <tr>
+                                <th>Weight</th>
+                                <td>{{ user_input.Weight }} kg</td>
+                            </tr>
+                            <tr>
+                                <th>Touch Screen</th>
+                                <td>{{ 'Yes' if user_input.TouchScreen == 1 else 'No' }}</td>
+                            </tr>
+                            <tr>
+                                <th>IPS Display</th>
+                                <td>{{ 'Yes' if user_input.IPS == 1 else 'No' }}</td>
+                            </tr>
+                            <tr>
+                                <th>PPI</th>
+                                <td>{{ user_input.PPI }}</td>
+                            </tr>
+                            <tr>
+                                <th>HDD</th>
+                                <td>{{ user_input.HDD }} GB</td>
+                            </tr>
+                            <tr>
+                                <th>SSD</th>
+                                <td>{{ user_input.SSD }} GB</td>
+                            </tr>
+                            <tr>
+                                <th>CPU Brand</th>
+                                <td>{{ user_input.Cpu_Brand }}</td>
+                            </tr>
+                            <tr>
+                                <th>GPU Brand</th>
+                                <td>{{ user_input.Gpu_brand }}</td>
+                            </tr>
+                            <tr>
+                                <th>Operating System</th>
+                                <td>{{ user_input.os }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary me-md-2">
+                        <i class="bi bi-arrow-left"></i> Make Another Prediction
+                    </a>
+                    <a href="{{ url_for('about') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-info-circle"></i> Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

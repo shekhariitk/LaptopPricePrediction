@@ -14,11 +14,17 @@ from src.logger import logging
 from src.utils import save_obj, evaluate_models
 from dataclasses import dataclass
 from jsonschema import validate, ValidationError
+from src.utils import load_config
+
+
+# Load the configuration
+config = load_config('xyz.yaml')
+logging.info(f"Loaded config: {config}")
 
 # Model Training Configuration
 @dataclass
 class ModelTrainerconfig:
-    trained_model_file_path = os.path.join("artifacts", "model.pkl")
+    trained_model_file_path = os.path.join("artifacts","model_training","model.pkl")
     param_file_path = os.path.join("config", "param.yaml")
     schema_file_path = os.path.join("config", "schema.yaml")
 
@@ -99,4 +105,16 @@ class ModelTrainerClass:
             logging.error("Error occurred during model training.")
             raise CustomException(e, sys)
 
+if __name__ == "__main__":
+    try:
+        model_trainer = ModelTrainerClass()
+        train_arr = config['data_transformation']['train_array_file_path']
+        test_arr = config['data_transformation']['test_array_file_path']
+        train_arr = np.load(train_arr)
+        test_arr = np.load(test_arr)
+        model_trainer.initiate_model_training(train_arr,test_arr)
 
+
+
+    except Exception as e:
+        logging.error(f"An error occurred: {str(e)}")

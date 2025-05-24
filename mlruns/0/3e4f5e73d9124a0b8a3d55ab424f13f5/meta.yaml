@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/LaptopPriceprediction/mlruns/0/3e4f5e73d9124a0b8a3d55ab424f13f5/artifacts
+deleted_time: 1741844948550
+end_time: 1737667776864
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 3e4f5e73d9124a0b8a3d55ab424f13f5
+run_name: gentle-zebra-339
+run_uuid: 3e4f5e73d9124a0b8a3d55ab424f13f5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1737667776794
+status: 3
+tags: []
+user_id: SHEKHAR SUMAN

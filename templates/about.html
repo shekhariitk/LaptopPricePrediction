@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h3 class="text-center">About Laptop Price Predictor</h3>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">How It Works</h5>
+                <p class="card-text">
+                    The Laptop Price Predictor uses machine learning to estimate the price of a laptop based on its specifications. 
+                    Our model was trained on thousands of laptop configurations to provide accurate price predictions.
+                </p>
+                
+                <h5 class="card-title mt-4">Features Considered</h5>
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item">Brand and model type</li>
+                    <li class="list-group-item">RAM capacity</li>
+                    <li class="list-group-item">Storage type and capacity (HDD/SSD)</li>
+                    <li class="list-group-item">Display features (Touchscreen, IPS, PPI)</li>
+                    <li class="list-group-item">Processor and GPU brand</li>
+                    <li class="list-group-item">Operating system</li>
+                    <li class="list-group-item">Weight</li>
+                </ul>
+                
+                <div class="alert alert-warning">
+                    <h5 class="alert-heading">Note</h5>
+                    <p>
+                        These predictions are estimates based on historical data and market trends. 
+                        Actual prices may vary based on region, availability, and other market factors.
+                    </p>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">
+                        <i class="bi bi-laptop"></i> Try the Predictor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/LaptopPriceprediction/mlruns/0/02b6fd5ffd5b4daea716c4d868be29db/artifacts
+end_time: 1741846266215
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 02b6fd5ffd5b4daea716c4d868be29db
+run_name: fearless-whale-785
+run_uuid: 02b6fd5ffd5b4daea716c4d868be29db
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741846266153
+status: 3
+tags: []
+user_id: SHEKHAR SUMAN

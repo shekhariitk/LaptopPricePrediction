@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/LaptopPriceprediction/mlruns/0/1a6528a60d6d4de79eeb57f8b2d67bfc/artifacts
+deleted_time: 1741844948627
+end_time: 1741844404793
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 1a6528a60d6d4de79eeb57f8b2d67bfc
+run_name: awesome-bug-787
+run_uuid: 1a6528a60d6d4de79eeb57f8b2d67bfc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741844404730
+status: 3
+tags: []
+user_id: SHEKHAR SUMAN

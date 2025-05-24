@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="text-center">Laptop Specifications</h3>
+            </div>
+            <div class="card-body">
+                <form id="predictionForm" action="{{ url_for('predict') }}" method="POST">
+                    <div class="row g-3">
+                        <!-- Company -->
+                        <div class="col-md-6">
+                            <label for="Company" class="form-label">Company</label>
+                            <select class="form-select" id="Company" name="Company" required>
+                                <option value="" selected disabled>Select company</option>
+                                <option value="Apple">Apple</option>
+                                <option value="HP">HP</option>
+                                <option value="Acer">Acer</option>
+                                <option value="Asus">Asus</option>
+                                <option value="Dell">Dell</option>
+                                <option value="Lenovo">Lenovo</option>
+                                <option value="MSI">MSI</option>
+                                <option value="Chuwi">Chuwi</option>
+                                <option value="Razer">Razer</option>
+                                <option value="Samsung">Samsung</option>
+                                <option value="Toshiba">Toshiba</option>
+                                <option value="Microsoft">Microsoft</option>
+                                <option value="Huawei">Huawei</option>
+                                <option value="LG">LG</option>
+                                <option value="Vero">Vero</option>
+                                <option value="Google">Google</option>
+                                <option value="Xiaomi">Xiaomi</option>
+                                <option value="Mediacom">Mediacom</option>
+                                <option value="Fujitsu">Fujitsu</option>
+
+
+                            </select>
+                        </div>
+                        
+                        <!-- TypeName -->
+                        <div class="col-md-6">
+                            <label for="TypeName" class="form-label">Type</label>
+                            <select class="form-select" id="TypeName" name="TypeName" required>
+                                <option value="" selected disabled>Select type</option>
+                                <option value="Ultrabook">Ultrabook</option>
+                                <option value="Notebook">Notebook</option>
+                                <option value="Netbook">Netbook</option>
+                                <option value="Gaming">Gaming</option>
+                                <option value="2 in 1 Convertible">2 in 1 Convertible</option>
+                                <option value="Workstation">Workstation</option>
+                            </select>
+                        </div>
+                        
+                        <!-- RAM -->
+                        <div class="col-md-6">
+                            <label for="Ram" class="form-label">RAM (GB)</label>
+                            <input type="number" class="form-control" id="Ram" name="Ram" min="2" max="64" required>
+                            <div class="form-text">Typically between 4GB to 32GB</div>
+                        </div>
+                        
+                        <!-- Weight -->
+                        <div class="col-md-6">
+                            <label for="Weight" class="form-label">Weight (kg)</label>
+                            <input type="number" step="0.01" class="form-control" id="Weight" name="Weight" min="0.5" max="5" required>
+                        </div>
+                        
+                        <!-- TouchScreen -->
+                        <div class="col-md-6">
+                            <label class="form-label">Touch Screen</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="TouchScreen" id="TouchScreenYes" value="1">
+                                <label class="form-check-label" for="TouchScreenYes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="TouchScreen" id="TouchScreenNo" value="0" checked>
+                                <label class="form-check-label" for="TouchScreenNo">No</label>
+                            </div>
+                        </div>
+                        
+                        <!-- IPS -->
+                        <div class="col-md-6">
+                            <label class="form-label">IPS Display</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="IPS" id="IPSYes" value="1">
+                                <label class="form-check-label" for="IPSYes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="IPS" id="IPSNo" value="0" checked>
+                                <label class="form-check-label" for="IPSNo">No</label>
+                            </div>
+                        </div>
+                        
+                        <!-- PPI -->
+                        <div class="col-md-6">
+                            <label for="PPI" class="form-label">Pixel Density (PPI)</label>
+                            <input type="number" step="0.1" class="form-control" id="PPI" name="PPI" min="100" max="400" required>
+                            <div class="form-text">Pixels per inch (typical range 100-300)</div>
+                        </div>
+                        
+                        <!-- HDD -->
+                        <div class="col-md-6">
+                            <label for="HDD" class="form-label">HDD Storage (GB)</label>
+                            <input type="number" class="form-control" id="HDD" name="HDD" min="0" max="2000" value="0" required>
+                            <div class="form-text">Set to 0 if no HDD</div>
+                        </div>
+                        
+                        <!-- SSD -->
+                        <div class="col-md-6">
+                            <label for="SSD" class="form-label">SSD Storage (GB)</label>
+                            <input type="number" class="form-control" id="SSD" name="SSD" min="0" max="2000" value="0" required>
+                            <div class="form-text">Set to 0 if no SSD</div>
+                        </div>
+                        
+                        <!-- CPU Brand -->
+                        <div class="col-md-6">
+                            <label for="Cpu_Brand" class="form-label">CPU Brand</label>
+                            <select class="form-select" id="Cpu_Brand" name="Cpu_Brand" required>
+                                <option value="" selected disabled>Select CPU brand</option>
+                                <option value="Intel Core i3">Intel Core i3</option>
+                                <option value="Intel Core i5">Intel Core i5</option>
+                                <option value="Intel Core i7">Intel Core i7</option>
+                                <option value="AMD Processor">AMD Processor</option>
+                                <option value="Other Intel Processor'">Other Intel Processor'</option>
+
+                            </select>
+                        </div>
+                        
+                        <!-- GPU Brand -->
+                        <div class="col-md-6">
+                            <label for="Gpu_brand" class="form-label">GPU Brand</label>
+                            <select class="form-select" id="Gpu_brand" name="Gpu_brand" required>
+                                <option value="" selected disabled>Select GPU brand</option>
+                                <option value="Intel">Intel</option>
+                                <option value="AMD">AMD</option>
+                                <option value="Nvidia">Nvidia</option>
+                            </select>
+                        </div>
+                        
+                        <!-- OS -->
+                        <div class="col-md-6">
+                            <label for="os" class="form-label">Operating System</label>
+                            <select class="form-select" id="os" name="os" required>
+                                <option value="" selected disabled>Select OS</option>
+                                <option value="Windows">Windows</option>
+                                <option value="Mac">Mac</option>
+                                <option value="Others/No OS/Linux">Others/No OS/Linux</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Predict Price</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Form validation
+    document.getElementById('predictionForm').addEventListener('submit', function(event) {
+        let isValid = true;
+        
+        // Check all required fields
+        const requiredFields = document.querySelectorAll('[required]');
+        requiredFields.forEach(field => {
+            if (!field.value) {
+                isValid = false;
+                field.classList.add('is-invalid');
+            } else {
+                field.classList.remove('is-invalid');
+            }
+        });
+        
+        // Check at least one storage option has value > 0
+        const hdd = parseInt(document.getElementById('HDD').value);
+        const ssd = parseInt(document.getElementById('SSD').value);
+        
+        if (hdd <= 0 && ssd <= 0) {
+            isValid = false;
+            document.getElementById('HDD').classList.add('is-invalid');
+            document.getElementById('SSD').classList.add('is-invalid');
+            alert('Please specify at least one storage option (HDD or SSD) with a value greater than 0');
+        }
+        
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+</script>
+{% endblock %}

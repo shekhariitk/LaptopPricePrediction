@@ -4,16 +4,22 @@ paths:
 
 
 data_ingestion:
-  raw_data_path: "artifacts/raw.csv"
-  train_data_path: "artifacts/train.csv"
-  test_data_path: "artifacts/test.csv"
+  raw_data_path: "artifacts/data_ingestion/raw.csv"
+  train_data_path: "artifacts/data_ingestion/train.csv"
+  test_data_path: "artifacts/data_ingestion/test.csv"
 
 data_transformation:
-  preprocessor_ob_file_path: "artifacts/preprocessor.pkl"
+  preprocessor_ob_file_path: "artifacts/data_transformation/preprocessor.pkl"
+  train_array_file_path: 'artifacts/data_transformation/train_array.npy'
+  test_array_file_path: 'artifacts/data_transformation/test_array.npy'
 
 model_trainer:
-  trained_model_file_path: "artifacts/model.pkl"
+  trained_model_file_path: "artifacts/model_training/model.pkl"
+  param_file_path: "config/param.yaml"
 
+model_evaluation:
+  evaluation_file_path: "artifacts/model_evaluation/evaluation.json"
+  
 logging:
   log_file: "logs/data_ingestion.log"
   log_level: "INFO"

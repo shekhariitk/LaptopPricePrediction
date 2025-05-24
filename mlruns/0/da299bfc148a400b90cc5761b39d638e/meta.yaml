@@ -1,0 +1,16 @@
+artifact_uri: file:///D:/LaptopPriceprediction/mlruns/0/da299bfc148a400b90cc5761b39d638e/artifacts
+deleted_time: 1741844948518
+end_time: 1737667514600
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: da299bfc148a400b90cc5761b39d638e
+run_name: aged-penguin-180
+run_uuid: da299bfc148a400b90cc5761b39d638e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1737667514545
+status: 3
+tags: []
+user_id: SHEKHAR SUMAN

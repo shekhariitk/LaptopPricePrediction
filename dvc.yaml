@@ -1,0 +1,39 @@
+stages:
+  data_ingestion:
+    cmd: python src/components/data_ingestion.py
+    deps:
+      - notebooks/data/cleaned_data.csv
+    outs:
+      - artifacts/data_ingestion/train.csv
+      - artifacts/data_ingestion/test.csv
+
+  data_transformation:
+    cmd: python src/components/data_transformation.py
+    deps:
+      - artifacts/data_ingestion/train.csv
+      - artifacts/data_ingestion/test.csv
+    outs:
+      - artifacts/data_transformation/train_array.npy
+      - artifacts/data_transformation/test_array.npy
+      - artifacts/data_transformation/preprocessor.pkl
+    metrics: []
+
+  model_evaluation:
+    cmd: python src/components/model_evaluation.py
+    deps:
+      - artifacts/data_transformation/train_array.npy
+      - artifacts/data_transformation/test_array.npy
+      - config/param.yaml # Ensure this file is part of your dependencies (if it's used for params)
+    outs:
+      - artifacts/model_evaluation/evaluation.json  # Path to the output JSON file containing evaluation metrics
+    metrics: []
+
+  model_training:
+    cmd: python src\components\model_trainer.py
+    deps:
+      - artifacts/data_transformation/train_array.npy
+      - artifacts/data_transformation/test_array.npy
+      - artifacts/data_transformation/preprocessor.pkl
+    outs:
+      - artifacts/model_training/model.pkl
+    metrics: []
