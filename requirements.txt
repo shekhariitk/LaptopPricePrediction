@@ -7,4 +7,5 @@ streamlit
 xgboost
 flask
 gunicorn
+mlflow
 -e.
